@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navi_inventory_main">
+    <fragment
+        android:id="@+id/navi_add_model"
+        android:name="com.example.inventory2.add.AddFragment"
+        android:label="fragment_new_oop"
+        tools:layout="@layout/fragment_add" >
+        <action
+            android:id="@+id/action_navi_add_model_to_navi_inventory_main"
+            app:destination="@id/navi_inventory_main" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navi_inventory_main"
+        android:name="com.example.inventory2.home.HomeFragment"
+        android:label="fragment_new_oop"
+        tools:layout="@layout/activity_main" >
+        <action
+            android:id="@+id/action_navi_inventory_main_to_navi_add_model"
+            app:destination="@id/navi_add_model" />
+        <action
+            android:id="@+id/action_navi_inventory_main_to_navi_inventoy_arhive"
+            app:destination="@id/navi_inventoy_arhive" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navi_inventoy_arhive"
+        android:name="com.example.inventory2.archive.ArchiveFragment"
+        android:label="fragment_new_archive"
+        tools:layout="@layout/archive_fragmetn" >
+        <action
+            android:id="@+id/action_navi_inventoy_arhive_to_navi_inventory_main"
+            app:destination="@id/navi_inventory_main" />
+    </fragment>
+
+
 
 </navigation>

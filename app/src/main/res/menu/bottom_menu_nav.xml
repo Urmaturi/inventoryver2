@@ -11,12 +11,12 @@
         android:id="@+id/navi_inventoy_arhive"
         android:icon="@drawable/ic_archive_icon"
         android:title="Архив"
-        tools:layout="@layout/fragment_inventory_archive"
+        tools:layout="@layout/archive_fragment"
         />
 
     <item
         android:id="@+id/navi_inventory_main"
         android:icon="@drawable/ic_main_menu"
         android:title="Главное"
-        tools:layout="@layout/fragment_add_new_model"/>
+        tools:layout="@layout/fragment_add"/>
 </menu>
