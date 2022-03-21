@@ -9,19 +9,19 @@ class GoodsRepository(private val goodsDao: GoodsDao) {
 
     val readAllData: LiveData<List<Goods>> = goodsDao.readAllData()
 
-    suspend fun addUser(goods: Goods ){
+    suspend fun addGoods(goods: Goods ){
         goodsDao.addGood(goods)
     }
 
-    suspend fun updateUser(goods: Goods){
+    suspend fun updateGoods (goods: Goods){
         goodsDao.updateGood(goods)
     }
 
-    suspend fun deleteUser(goods: Goods){
+    suspend fun deleteGoods(goods: Goods){
         goodsDao.deleteGood(goods)
     }
 
-    suspend fun deleteAllUsers(){
+    suspend fun deleteAllGoods(){
         goodsDao.deleteAllGoods()
     }
 

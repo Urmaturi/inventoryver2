@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
 @Database(entities = [Goods::class], version = 1, exportSchema = false)
 abstract class GoodsDatabase : RoomDatabase() {
 
-    abstract fun GoodsDao(): GoodsDao
+    abstract fun goodsDao(): GoodsDao
 
     companion object {
         @Volatile
@@ -31,5 +31,4 @@ abstract class GoodsDatabase : RoomDatabase() {
             }
         }
     }
-
 }

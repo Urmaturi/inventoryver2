@@ -17,14 +17,14 @@ class GoodsViewModel(application: Application): AndroidViewModel(application)  {
     init {
         val goodsDao = GoodsDatabase.getDatabase(
             application
-        ).GoodsDao()
+        ).goodsDao()
         repository = GoodsRepository(goodsDao)
         readAllData = repository.readAllData
     }
 
-    fun addUser(good: Goods){
+    fun addGoods(good: Goods){
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addUser(good)
+            repository.addGoods(good)
         }
     }
 

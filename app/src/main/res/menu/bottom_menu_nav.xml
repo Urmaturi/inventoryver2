@@ -15,7 +15,7 @@
         />
 
     <item
-        android:id="@+id/navi_inventory_main"
+        android:id="@+id/navi_inventory_home"
         android:icon="@drawable/ic_main_menu"
         android:title="Главное"
         tools:layout="@layout/fragment_add"/>
