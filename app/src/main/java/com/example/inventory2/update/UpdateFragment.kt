@@ -59,7 +59,7 @@ class UpdateFragment : Fragment() {
 
     private fun comeBackToHome() {
         val navController = APP.findNavController(R.id.nav_host_fragment)
-        navController.navigate(R.id.action_updateFragment_to_navi_inventory_home)
+        navController.navigate(R.id.action_updateFragment_to_homeFragment)
     }
 
 

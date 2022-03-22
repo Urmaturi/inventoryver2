@@ -26,7 +26,7 @@
             android:id="@+id/action_navi_inventory_main_to_navi_inventoy_arhive"
             app:destination="@id/archiveFragmetn" />
         <action
-            android:id="@+id/action_navi_inventory_home_to_updateFragment"
+            android:id="@+id/action_homeFragment_to_updateFragment"
             app:destination="@id/updateFragment" />
     </fragment>
 
@@ -47,12 +47,12 @@
         android:name="com.example.inventory2.update.UpdateFragment"
         android:label="fragment_update"
         tools:layout="@layout/fragment_update" >
-        <action
-            android:id="@+id/action_updateFragment_to_navi_inventory_home"
-            app:destination="@id/homeFragment" />
         <argument
             android:name="currentUser"
             app:argType="com.example.inventory2.database.Goods" />
+        <action
+            android:id="@+id/action_updateFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
 

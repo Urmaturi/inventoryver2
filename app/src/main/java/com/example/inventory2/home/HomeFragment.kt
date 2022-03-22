@@ -86,11 +86,6 @@ class HomeFragment : Fragment() {
 
     private fun fillRecicleView()
     {
-        Toast.makeText(
-            requireContext(),
-            "проверка",
-            Toast.LENGTH_LONG
-        ).show()
 
         val adapter = LstAdapter()
         val recyclerView = binding.recyclerViewHome

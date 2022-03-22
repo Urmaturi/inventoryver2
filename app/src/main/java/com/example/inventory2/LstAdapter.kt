@@ -45,9 +45,11 @@ class LstAdapter : RecyclerView.Adapter<LstAdapter.MyViewHolder>() {
 
 
         holder.itemView.rowLayout.imageViewSettings.setOnClickListener {
-            val popupMenu =
-                PopupMenu(holder.itemView.context, holder.itemView.rowLayout.imageViewSettings)
-            //if (!currentItem.archiveOfGoods) {
+
+            if (!currentItem.archiveOfGoods) {
+                val popupMenu =
+                    PopupMenu(holder.itemView.context, holder.itemView.rowLayout.imageViewSettings)
+
                 popupMenu.inflate((R.menu.popup_menu_home))
                 popupMenu.show();
                 popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem ->
@@ -60,29 +62,31 @@ class LstAdapter : RecyclerView.Adapter<LstAdapter.MyViewHolder>() {
                         }
                         R.id.menu_edit -> {
                             val navController = APP.findNavController(R.id.nav_host_fragment)
-                            navController.navigate(R.id.action_navi_inventory_home_to_updateFragment)
+                            navController.navigate(R.id.action_homeFragment_to_updateFragment)
                         }
                     }
                     true
                 })
-//            } else
-//                popupMenu.inflate(R.menu.popupmenu)
-//            popupMenu.show();
-//            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem ->
-//
-//                when (item.itemId) {
-//
-//                    R.id.menu_delete -> {
-//
-//
-//                    }
-//                    R.id.menu_recovery -> {
-//
-//
-//                    }
-//                }
-//                true
-//            })
+            } else {
+                val popupMenu = PopupMenu(holder.itemView.context, holder.itemView.rowLayout.imageViewSettings)
+                popupMenu.inflate(R.menu.popupmenu)
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem ->
+
+                    when (item.itemId) {
+
+                        R.id.menu_delete -> {
+
+
+                        }
+                        R.id.menu_recovery -> {
+
+
+                        }
+                    }
+                    true
+                })
+            }
         }
     }
 
