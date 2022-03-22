@@ -38,6 +38,9 @@
         <action
             android:id="@+id/action_navi_inventoy_arhive_to_navi_inventory_main"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_archiveFragmetn_to_addFragment"
+            app:destination="@id/addFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateFragment"

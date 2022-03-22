@@ -1,25 +1,33 @@
 package com.example.inventory2
 
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.inventory2.add.AddFragment
 import com.example.inventory2.database.Goods
-import com.example.inventory2.home.HomeFragment
 import kotlinx.android.synthetic.main.custom_row.view.*
-import com.example.inventory2.R
 import com.example.inventory2.home.HomeFragmentDirections
 
-class LstAdapter: RecyclerView.Adapter<LstAdapter.MyViewHolder>() {
+class LstAdapter : RecyclerView.Adapter<LstAdapter.MyViewHolder>() {
+
+
+    var onItemClickToArchive: ((Goods) -> (Unit))? = null
+    var onItemClickDelete: ((Goods) -> (Unit))? = null
+    var onItemClickUpdate: ((Goods) -> (Unit))? = null
+    var onItemClickRecovery: ((Goods) -> (Unit))? = null
+
 
     private var goodsList = emptyList<Goods>()
 
-    class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {}
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.custom_row, parent, false))
+        return MyViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.custom_row, parent, false)
+        )
     }
 
     override fun getItemCount(): Int {
@@ -35,16 +43,54 @@ class LstAdapter: RecyclerView.Adapter<LstAdapter.MyViewHolder>() {
         holder.itemView.textViewManufacturer.text = currentItem.goodsManufacturer
         holder.itemView.textViewAmount.text = currentItem.amountOfGoods.toString()
 
-        holder.itemView.rowLayout.setOnClickListener {
-            val action = HomeFragmentDirections.actionNaviInventoryHomeToUpdateFragment(currentItem)
-            holder.itemView.findNavController().navigate(action)
+
+        holder.itemView.rowLayout.imageViewSettings.setOnClickListener {
+            val popupMenu =
+                PopupMenu(holder.itemView.context, holder.itemView.rowLayout.imageViewSettings)
+            //if (!currentItem.archiveOfGoods) {
+                popupMenu.inflate((R.menu.popup_menu_home))
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem ->
+
+                    when (item.itemId) {
+                        R.id.menu_archive -> {
+                            //в архив
+                            onItemClickToArchive?.invoke(currentItem)
+
+                        }
+                        R.id.menu_edit -> {
+                            val navController = APP.findNavController(R.id.nav_host_fragment)
+                            navController.navigate(R.id.action_navi_inventory_home_to_updateFragment)
+                        }
+                    }
+                    true
+                })
+//            } else
+//                popupMenu.inflate(R.menu.popupmenu)
+//            popupMenu.show();
+//            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem ->
+//
+//                when (item.itemId) {
+//
+//                    R.id.menu_delete -> {
+//
+//
+//                    }
+//                    R.id.menu_recovery -> {
+//
+//
+//                    }
+//                }
+//                true
+//            })
         }
-
-
     }
 
-    fun setData(goods: List<Goods>){
+
+    fun setData(goods: List<Goods>) {
         this.goodsList = goods
         notifyDataSetChanged()
     }
+
+
 }

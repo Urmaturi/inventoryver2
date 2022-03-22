@@ -32,9 +32,6 @@ class UpdateFragment : Fragment() {
         binding.editTextProductCost.setText(arg.currentUser.goodCost.toString())
 
 
-
-
-
         binding.imageViewGoBack.setOnClickListener {
             comeBackToHome()
         }

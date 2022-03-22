@@ -15,10 +15,14 @@ interface GoodsDao {
     @Delete
     suspend fun deleteGood(good: Goods)
 
-    @Query("DELETE FROM goods_table")
-    suspend fun deleteAllGoods()
 
-    @Query("SELECT * FROM goods_table ORDER BY id ASC")
+    @Query("SELECT * FROM goods_table WHERE archiveOfGoods = 0 ORDER BY id ASC")
     fun readAllData(): LiveData<List<Goods>>
+
+    @Query("SELECT * FROM goods_table WHERE archiveOfGoods = 1 ")
+    fun readArhciveData(): LiveData<List<Goods>>
+
+//    @Query("SELECT * FROM goods_table WHERE archiveOfGoods='true'  ORDER BY id ASC")
+//    fun searchData(): LiveData<List<Goods>>
 
 }

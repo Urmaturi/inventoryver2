@@ -8,6 +8,7 @@ import com.example.inventory2.database.GoodsDao
 class GoodsRepository(private val goodsDao: GoodsDao) {
 
     val readAllData: LiveData<List<Goods>> = goodsDao.readAllData()
+    val readArchiveData: LiveData<List<Goods>> = goodsDao.readArhciveData()
 
     suspend fun addGoods(goods: Goods ){
         goodsDao.addGood(goods)
@@ -21,8 +22,9 @@ class GoodsRepository(private val goodsDao: GoodsDao) {
         goodsDao.deleteGood(goods)
     }
 
-    suspend fun deleteAllGoods(){
-        goodsDao.deleteAllGoods()
-    }
+
+
+
+
 
 }
