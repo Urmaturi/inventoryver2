@@ -5,6 +5,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.inventory2.add.AddFragment
 
 
 class MainActivity : AppCompatActivity() {

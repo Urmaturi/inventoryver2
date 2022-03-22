@@ -28,6 +28,14 @@ class GoodsViewModel(application: Application): AndroidViewModel(application)  {
         }
     }
 
+    fun updateGood(good: Goods)
+    {
+        viewModelScope.launch(Dispatchers.IO)
+        {
+            repository.updateGoods(good)
+        }
+    }
+
 
 
 

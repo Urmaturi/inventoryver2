@@ -3,40 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/navi_inventory_home">
+    app:startDestination="@id/homeFragment">
     <fragment
-        android:id="@+id/navi_add_model"
+        android:id="@+id/addFragment"
         android:name="com.example.inventory2.add.AddFragment"
-        android:label="fragment_new_oop"
+        android:label="add"
         tools:layout="@layout/fragment_add" >
         <action
             android:id="@+id/action_navi_add_model_to_navi_inventory_home"
-            app:destination="@id/navi_inventory_home" />
+            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/navi_inventory_home"
+        android:id="@+id/homeFragment"
         android:name="com.example.inventory2.home.HomeFragment"
-        android:label="fragment_new_oop"
-        tools:layout="@layout/activity_main" >
+        android:label="home"
+        tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_navi_inventory_main_to_navi_add_model"
-            app:destination="@id/navi_add_model" />
+            app:destination="@id/addFragment" />
         <action
             android:id="@+id/action_navi_inventory_main_to_navi_inventoy_arhive"
-            app:destination="@id/navi_inventoy_arhive" />
+            app:destination="@id/archiveFragmetn" />
+        <action
+            android:id="@+id/action_navi_inventory_home_to_updateFragment"
+            app:destination="@id/updateFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/navi_inventoy_arhive"
+        android:id="@+id/archiveFragmetn"
         android:name="com.example.inventory2.archive.ArchiveFragment"
         android:label="fragment_new_archive"
         tools:layout="@layout/archive_fragmetn" >
         <action
             android:id="@+id/action_navi_inventoy_arhive_to_navi_inventory_main"
-            app:destination="@id/navi_inventory_home" />
+            app:destination="@id/homeFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.example.inventory2.update.UpdateFragment"
+        android:label="fragment_update"
+        tools:layout="@layout/fragment_update" >
+        <action
+            android:id="@+id/action_updateFragment_to_navi_inventory_home"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="currentUser"
+            app:argType="com.example.inventory2.database.Goods" />
+    </fragment>
 
 
 </navigation>

@@ -3,10 +3,14 @@ package com.example.inventory2
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.inventory2.add.AddFragment
 import com.example.inventory2.database.Goods
+import com.example.inventory2.home.HomeFragment
 import kotlinx.android.synthetic.main.custom_row.view.*
-
+import com.example.inventory2.R
+import com.example.inventory2.home.HomeFragmentDirections
 
 class LstAdapter: RecyclerView.Adapter<LstAdapter.MyViewHolder>() {
 
@@ -31,12 +35,12 @@ class LstAdapter: RecyclerView.Adapter<LstAdapter.MyViewHolder>() {
         holder.itemView.textViewManufacturer.text = currentItem.goodsManufacturer
         holder.itemView.textViewAmount.text = currentItem.amountOfGoods.toString()
 
+        holder.itemView.rowLayout.setOnClickListener {
+            val action = HomeFragmentDirections.actionNaviInventoryHomeToUpdateFragment(currentItem)
+            holder.itemView.findNavController().navigate(action)
+        }
 
 
-//        holder.itemView.rowLayout.setOnClickListener {
-//            val action = ListFragmentDirections.actionListFragmentToUpdateFragment(currentItem)
-//            holder.itemView.findNavController().navigate(action)
-//        }
     }
 
     fun setData(goods: List<Goods>){

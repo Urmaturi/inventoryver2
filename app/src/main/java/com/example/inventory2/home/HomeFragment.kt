@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.inventory2.APP
 import com.example.inventory2.GoodsViewModel
 import com.example.inventory2.LstAdapter
@@ -38,10 +37,6 @@ class HomeFragment : Fragment() {
         mGoodViewModel.readAllData.observe(viewLifecycleOwner, Observer { user ->
             adapter.setData(user)
         })
-
-
-
-
 
 
         binding.btnAddNewGoods.setOnClickListener {
