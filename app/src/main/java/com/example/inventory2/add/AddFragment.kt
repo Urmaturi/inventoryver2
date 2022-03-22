@@ -8,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import com.example.inventory2.APP
 import com.example.inventory2.GoodsViewModel
+import com.example.inventory2.R
 import com.example.inventory2.database.Goods
 import com.example.inventory2.databinding.FragmentAddBinding
 
@@ -32,17 +35,12 @@ class AddFragment : Fragment() {
     private fun insertDataToDatabase() {
 
 
-//        val name = binding.editTextName.text.toString()
-//        val cost = binding.editTextProductCost.text.toString().toInt()
-//        val manufacturer = binding.editTextManufacturer.text.toString()
-//        val amont = binding.editTextNumber.text.toString().toInt()
-//        val archive = false
+        val name = binding.editTextName.text.toString()
+        val cost = binding.editTextProductCost.text.toString().toInt()
+        val manufacturer = binding.editTextManufacturer.text.toString()
+        val amont = binding.editTextNumber.text.toString().toInt()
+        val archive = false
 
-        val name =  "nike"
-        val cost = 1500
-        val manufacturer = "reebok"
-        val amont = 50
-        val archive:Boolean = false
 
         if (inputCheck(name, cost, manufacturer, amont)) {
             // Create User Object
@@ -58,13 +56,17 @@ class AddFragment : Fragment() {
             mGoodsViewModel.addGoods(good)
             Toast.makeText(requireContext(), "Удачно записанно!", Toast.LENGTH_LONG).show()
             // Navigate Back
-//
-//            val navController = APP.findNavController(R.id.nav_host_fragment)
-//            navController.navigate(R.id.action_navi_add_model_to_navi_inventory_home)
+            comeBackToHome()
+
         } else {
             Toast.makeText(requireContext(), "Заплните все поля!.", Toast.LENGTH_LONG)
                 .show()
         }
+    }
+
+    private fun comeBackToHome() {
+        val navController = APP.findNavController(R.id.nav_host_fragment)
+        navController.navigate(R.id.action_navi_add_model_to_navi_inventory_home)
     }
 
 
