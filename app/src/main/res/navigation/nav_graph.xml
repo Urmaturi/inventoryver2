@@ -10,7 +10,7 @@
         android:label="add"
         tools:layout="@layout/fragment_add" >
         <action
-            android:id="@+id/action_navi_add_model_to_navi_inventory_home"
+            android:id="@+id/action_addFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 
@@ -19,15 +19,16 @@
         android:name="com.example.inventory2.home.HomeFragment"
         android:label="home"
         tools:layout="@layout/fragment_home" >
+
         <action
-            android:id="@+id/action_navi_inventory_main_to_navi_add_model"
-            app:destination="@id/addFragment" />
-        <action
-            android:id="@+id/action_navi_inventory_main_to_navi_inventoy_arhive"
+            android:id="@+id/action_homeFragment_to_archiveFragmetn"
             app:destination="@id/archiveFragmetn" />
         <action
             android:id="@+id/action_homeFragment_to_updateFragment"
             app:destination="@id/updateFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addFragment"
+            app:destination="@id/addFragment" />
     </fragment>
 
     <fragment
@@ -36,7 +37,7 @@
         android:label="fragment_new_archive"
         tools:layout="@layout/archive_fragmetn" >
         <action
-            android:id="@+id/action_navi_inventoy_arhive_to_navi_inventory_main"
+            android:id="@+id/action_archiveFragmetn_to_homeFragment"
             app:destination="@id/homeFragment" />
         <action
             android:id="@+id/action_archiveFragmetn_to_addFragment"

@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
 
         binding.btnAddNewGoods.setOnClickListener {
             val navController = APP.findNavController(R.id.nav_host_fragment)
-            navController.navigate(R.id.action_navi_inventory_main_to_navi_add_model)
+            navController.navigate(R.id.action_homeFragment_to_addFragment)
         }
     }
 

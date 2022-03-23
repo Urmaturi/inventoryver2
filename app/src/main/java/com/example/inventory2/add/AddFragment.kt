@@ -81,7 +81,7 @@ class AddFragment : Fragment() {
 
     private fun comeBackToHome() {
         val navController = APP.findNavController(R.id.nav_host_fragment)
-        navController.navigate(R.id.action_navi_add_model_to_navi_inventory_home)
+        navController.navigate(R.id.action_addFragment_to_homeFragment)
     }
 
 

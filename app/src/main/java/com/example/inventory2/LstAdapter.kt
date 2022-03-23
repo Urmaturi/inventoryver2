@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.inventory2.database.Goods
 import kotlinx.android.synthetic.main.custom_row.view.*
 import com.example.inventory2.home.HomeFragmentDirections
+import com.example.inventory2.update.UpdateFragmentDirections
 
 class LstAdapter : RecyclerView.Adapter<LstAdapter.MyViewHolder>() {
 
@@ -61,8 +62,9 @@ class LstAdapter : RecyclerView.Adapter<LstAdapter.MyViewHolder>() {
 
                         }
                         R.id.menu_edit -> {
-                            val navController = APP.findNavController(R.id.nav_host_fragment)
-                            navController.navigate(R.id.action_homeFragment_to_updateFragment)
+
+                            val action = HomeFragmentDirections.actionHomeFragmentToUpdateFragment(currentItem)
+                            holder.itemView.findNavController().navigate(action)
                         }
                     }
                     true
@@ -77,10 +79,8 @@ class LstAdapter : RecyclerView.Adapter<LstAdapter.MyViewHolder>() {
 
                         R.id.menu_delete -> {
 
-
                         }
                         R.id.menu_recovery -> {
-
 
                         }
                     }
