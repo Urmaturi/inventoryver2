@@ -1,12 +1,15 @@
 package com.example.inventory2
 
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.PopupMenu
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.inventory2.database.Goods
 import kotlinx.android.synthetic.main.custom_row.view.*
 import com.example.inventory2.home.HomeFragmentDirections
@@ -38,7 +41,9 @@ class LstAdapter : RecyclerView.Adapter<LstAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = goodsList[position]
 
-        holder.itemView.imageViewBotas.setImageResource(R.drawable.image1)
+//        holder.itemView.imageViewBotas.setImageResource(R.drawable.image1)
+        holder.itemView.imageViewBotas.loadImage(currentItem.image)
+
         holder.itemView.textViewName.text = currentItem.goodName
         holder.itemView.textViewCost.text = currentItem.goodCost.toString()
         holder.itemView.textViewManufacturer.text = currentItem.goodsManufacturer
@@ -96,4 +101,9 @@ class LstAdapter : RecyclerView.Adapter<LstAdapter.MyViewHolder>() {
     }
 
 
+    fun ImageView.loadImage(image: Bitmap){
+        Glide.with(this.context)
+            .load(image)
+            .into(this)
+    }
 }

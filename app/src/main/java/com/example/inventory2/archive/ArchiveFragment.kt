@@ -32,6 +32,7 @@ class ArchiveFragment : Fragment() {
         adapter.onItemClickDelete = {goodsTemp ->  deleteItem(goodsTemp) }
         adapter.onItemClickRecovery = {goodsTemp -> recoveryItemFromArchive(goodsTemp)}
 
+        setUpSearchView()
         binding.btnAddNewGoods.setOnClickListener {
             val navController = APP.findNavController(R.id.nav_host_fragment)
             navController.navigate(R.id.action_archiveFragmetn_to_addFragment)
@@ -71,6 +72,47 @@ class ArchiveFragment : Fragment() {
         mGoodViewModel.updateGood(tempGood)
     }
 
+    private fun searchFillRecicleView(boolean: Boolean, keyWord: String) {
+        val searchWord = "%$keyWord%"
+        val adapter = LstAdapter()
+        val recyclerView = binding.recyclerViewArchive
+        recyclerView.adapter = adapter
+
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        mGoodViewModel = ViewModelProvider(this).get(GoodsViewModel::class.java)
+        mGoodViewModel.searchData(searchWord, boolean)
+            .observe(viewLifecycleOwner, Observer { goods ->
+                adapter.setData(goods)
+            })
+    }
+
+    private fun setUpSearchView() {
+
+        binding.searchView.apply {
+            isSubmitButtonEnabled = true
+            setOnQueryTextListener(object :
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    if (query != null) {
+
+                        searchFillRecicleView(false,query)
+                        //  observeData(query)
+                    }
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText != null) {
+                        searchFillRecicleView(false,newText)
+                        //  observeData(newText)
+                    }
+                    return true
+                }
+
+            })
+        }
+    }
 
 
 

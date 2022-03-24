@@ -27,7 +27,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         fillRecicleView()
         setUpSearchView()
 
@@ -73,31 +72,12 @@ class HomeFragment : Fragment() {
         mGoodViewModel.searchData(searchWord, boolean)
             .observe(viewLifecycleOwner, Observer { goods ->
                 adapter.setData(goods)
-                adapter.onItemClickToArchive = { goodFromAdapter ->
-                    goToArchive(goodFromAdapter)
-                }
             })
     }
 
 
     fun goToArchive(good: Goods) {
             good.archiveOfGoods = true
-//        val id = good.id
-//        val name = good.goodName
-//        val cost = good.goodCost
-//        val manufacturer = good.goodsManufacturer
-//        val amont = good.amountOfGoods
-//        val archive = true
-//
-//
-//
-//        val tempGood = Goods(
-//            id,
-//            name,
-//            cost,
-//            manufacturer,
-//            amont, archive
-//        )
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Да") { _, _ ->
@@ -120,7 +100,6 @@ class HomeFragment : Fragment() {
 
 
     private fun setUpSearchView() {
-
         binding.searchView.apply {
             isSubmitButtonEnabled = true
             setOnQueryTextListener(object :
@@ -145,13 +124,6 @@ class HomeFragment : Fragment() {
             })
         }
     }
-
-
-//    private fun observeData(querySearch: String) {
-//
-//        val listOfGoods = mGoodViewModel.searchData(searchWord, false)
-//        fillRecicleView(listOfGoods)
-//    }
 
 
 }

@@ -37,15 +37,11 @@ class AddFragment : Fragment() {
             if (isGranted) {
                 getContent.launch()
             } else {
-                 Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT)
             }
         }
 
-    private fun inputCheck(name: String, cost: Int, manufacturer: String, amont: Int): Boolean {
-        return !(TextUtils.isEmpty(name) && TextUtils.isEmpty(cost.toString()) && TextUtils.isEmpty(
-            manufacturer
-        ) && TextUtils.isEmpty(amont.toString()))
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,34 +79,37 @@ class AddFragment : Fragment() {
     private fun insertDataToDatabase() {
 
 
-        val name = binding.editTextName.text.toString()
-        val cost = binding.editTextProductCost.text.toString().toInt()
-        val manufacturer = binding.editTextManufacturer.text.toString()
-        val amont = binding.editTextNumber.text.toString().toInt()
-        val archive = false
-        val image =  bitmap!!
+        with(binding) {
+            if (editTextName.text.isNotEmpty() && editTextProductCost.text.isNotEmpty() &&
+                editTextManufacturer.text.isNotEmpty() && editTextNumber.text.isNotEmpty()
+                && bitmap != null
+            ) {
 
+                val name = binding.editTextName.text.toString()
+                val cost = binding.editTextProductCost.text.toString().toInt()
+                val manufacturer = binding.editTextManufacturer.text.toString()
+                val amont = binding.editTextNumber.text.toString().toInt()
+                val archive = false
+                val image = bitmap!!
 
-        if (inputCheck(name, cost, manufacturer, amont)) {
-            // Create User Object
-            val good = Goods(
-                0,
-                name,
-                cost,
-                manufacturer,
-                amont, archive,
-                image
-            )
+                mGoodsViewModel.addGoods(
+                    Goods(
+                        0,
+                        name,
+                        cost,
+                        manufacturer,
+                        amont, archive,
+                        image
+                    )
+                )
+                Toast.makeText(requireContext(), "Удачно записанно!", Toast.LENGTH_LONG).show()
+                // Navigate Back
+                comeBackToHome()
 
-            // Add Data to Database
-            mGoodsViewModel.addGoods(good)
-            Toast.makeText(requireContext(), "Удачно записанно!", Toast.LENGTH_LONG).show()
-            // Navigate Back
-            comeBackToHome()
-
-        } else {
-            Toast.makeText(requireContext(), "Заплните все поля!.", Toast.LENGTH_LONG)
-                .show()
+            } else {
+                Toast.makeText(requireContext(), "Заплните все поля!.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 
@@ -119,13 +118,11 @@ class AddFragment : Fragment() {
         navController.navigate(R.id.action_addFragment_to_homeFragment)
     }
 
-    fun ImageView.loadImage(image: Bitmap){
+    fun ImageView.loadImage(image: Bitmap) {
         Glide.with(this.context)
             .load(image)
             .into(this)
     }
-
-
 
 
 }
