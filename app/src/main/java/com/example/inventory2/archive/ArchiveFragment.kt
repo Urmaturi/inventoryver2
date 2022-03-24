@@ -13,6 +13,7 @@ import com.example.inventory2.APP
 import com.example.inventory2.GoodsViewModel
 import com.example.inventory2.LstAdapter
 import com.example.inventory2.R
+import com.example.inventory2.database.Goods
 import com.example.inventory2.databinding.ArchiveFragmetnBinding
 import com.example.inventory2.databinding.FragmentHomeBinding
 
@@ -21,23 +22,15 @@ class ArchiveFragment : Fragment() {
 
     private lateinit var mGoodViewModel: GoodsViewModel
 
-    lateinit var binding : ArchiveFragmetnBinding
+    lateinit var binding: ArchiveFragmetnBinding
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val adapter = LstAdapter()
-        val recyclerView = binding.recyclerViewArchive
-        recyclerView.adapter = adapter
-
-        recyclerView.layoutManager =  GridLayoutManager(requireContext(), 2)
-
-        mGoodViewModel = ViewModelProvider(this).get(GoodsViewModel::class.java)
-        mGoodViewModel.readArchiveData.observe(viewLifecycleOwner, Observer { user ->
-            adapter.setData(user)
-        })
-
+        fillRecicleView(adapter)
+        adapter.onItemClickDelete = {goodsTemp ->  deleteItem(goodsTemp) }
+        adapter.onItemClickRecovery = {goodsTemp -> recoveryItemFromArchive(goodsTemp)}
 
         binding.btnAddNewGoods.setOnClickListener {
             val navController = APP.findNavController(R.id.nav_host_fragment)
@@ -53,6 +46,32 @@ class ArchiveFragment : Fragment() {
         binding = ArchiveFragmetnBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+    private fun fillRecicleView(adapter: LstAdapter) {
+        val recyclerView = binding.recyclerViewArchive
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        mGoodViewModel = ViewModelProvider(this).get(GoodsViewModel::class.java)
+        mGoodViewModel.readArchiveData.observe(viewLifecycleOwner, Observer { goods ->
+            adapter.setData(goods)
+        })
+    }
+
+    fun deleteItem(goods: Goods)
+    {
+        mGoodViewModel.deleteGood(goods)
+    }
+
+
+    fun recoveryItemFromArchive(goodFromArchive: Goods)
+    {
+        val tempGood: Goods = goodFromArchive
+        tempGood.archiveOfGoods  = false
+        mGoodViewModel.updateGood(tempGood)
+    }
+
+
 
 
 }

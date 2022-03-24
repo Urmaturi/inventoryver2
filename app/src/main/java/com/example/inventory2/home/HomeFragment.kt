@@ -28,9 +28,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
         fillRecicleView()
-
+        setUpSearchView()
 
         binding.btnAddNewGoods.setOnClickListener {
             val navController = APP.findNavController(R.id.nav_host_fragment)
@@ -46,27 +45,63 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    private fun fillRecicleView() {
+        val adapter = LstAdapter()
+        val recyclerView = binding.recyclerViewHome
+        recyclerView.adapter = adapter
+
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        mGoodViewModel = ViewModelProvider(this).get(GoodsViewModel::class.java)
+        mGoodViewModel.readAllData.observe(viewLifecycleOwner, Observer { goods ->
+            adapter.setData(goods)
+            adapter.onItemClickToArchive = { goodFromAdapter ->
+                goToArchive(goodFromAdapter)
+            }
+        })
+    }
+
+    private fun searchFillRecicleView(boolean: Boolean, keyWord: String) {
+        val searchWord = "%$keyWord%"
+        val adapter = LstAdapter()
+        val recyclerView = binding.recyclerViewHome
+        recyclerView.adapter = adapter
+
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        mGoodViewModel = ViewModelProvider(this).get(GoodsViewModel::class.java)
+        mGoodViewModel.searchData(searchWord, boolean)
+            .observe(viewLifecycleOwner, Observer { goods ->
+                adapter.setData(goods)
+                adapter.onItemClickToArchive = { goodFromAdapter ->
+                    goToArchive(goodFromAdapter)
+                }
+            })
+    }
+
 
     fun goToArchive(good: Goods) {
-
-        val id = good.id
-        val name = good.goodName
-        val cost = good.goodCost
-        val manufacturer = good.goodsManufacturer
-        val amont = good.amountOfGoods
-        val archive = true
-
-        val tempGood = Goods(
-            id,
-            name,
-            cost,
-            manufacturer,
-            amont, archive
-        )
+            good.archiveOfGoods = true
+//        val id = good.id
+//        val name = good.goodName
+//        val cost = good.goodCost
+//        val manufacturer = good.goodsManufacturer
+//        val amont = good.amountOfGoods
+//        val archive = true
+//
+//
+//
+//        val tempGood = Goods(
+//            id,
+//            name,
+//            cost,
+//            manufacturer,
+//            amont, archive
+//        )
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Да") { _, _ ->
-            mGoodViewModel.updateGood(tempGood)
+            mGoodViewModel.updateGood(good)
             Toast.makeText(
                 requireContext(),
                 "Успешно отправлен в архив: ${good.goodName}",
@@ -84,22 +119,39 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun fillRecicleView()
-    {
+    private fun setUpSearchView() {
 
-        val adapter = LstAdapter()
-        val recyclerView = binding.recyclerViewHome
-        recyclerView.adapter = adapter
-        // recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-        // GoodViewModel
-        mGoodViewModel = ViewModelProvider(this).get(GoodsViewModel::class.java)
-        mGoodViewModel.readAllData.observe(viewLifecycleOwner, Observer { goods ->
-            adapter.setData(goods)
-            adapter.onItemClickToArchive = { goodFromAdapter ->
-                goToArchive(goodFromAdapter)
-            }
-        })
+        binding.searchView.apply {
+            isSubmitButtonEnabled = true
+            setOnQueryTextListener(object :
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    if (query != null) {
+
+                        searchFillRecicleView(false,query)
+                      //  observeData(query)
+                    }
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText != null) {
+                        searchFillRecicleView(false,newText)
+                      //  observeData(newText)
+                    }
+                    return true
+                }
+
+            })
+        }
     }
+
+
+//    private fun observeData(querySearch: String) {
+//
+//        val listOfGoods = mGoodViewModel.searchData(searchWord, false)
+//        fillRecicleView(listOfGoods)
+//    }
+
 
 }

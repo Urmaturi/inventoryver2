@@ -1,5 +1,6 @@
 package com.example.inventory2.update
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -64,31 +65,32 @@ class UpdateFragment : Fragment() {
 
 
     private fun update() {
-        val name = binding.editTextName.text.toString()
-        val cost = binding.editTextProductCost.text.toString().toInt()
-        val manufacturer = binding.editTextManufacturer.text.toString()
-        val amont = binding.editTextNumber.text.toString().toInt()
-        val archive = arg.currentUser.archiveOfGoods
-
-
-        if (inputCheck(name, cost, manufacturer, amont)) {
-            // Create User Object
-            val good = Goods(
-                arg.currentUser.id,
-                name,
-                cost,
-                manufacturer,
-                amont, archive
-            )
-            // Update Data to Database
-            mGoodsViewModel.updateGood(good)
-            Toast.makeText(requireContext(), "Удачно измененно!", Toast.LENGTH_LONG).show()
-            // Navigate Back
-            comeBackToHome()
-        } else {
-            Toast.makeText(requireContext(), "Заполните все поля!.", Toast.LENGTH_LONG)
-                .show()
-        }
+//        val name = binding.editTextName.text.toString()
+//        val cost = binding.editTextProductCost.text.toString().toInt()
+//        val manufacturer = binding.editTextManufacturer.text.toString()
+//        val amont = binding.editTextNumber.text.toString().toInt()
+//        val archive = arg.currentUser.archiveOfGoods
+//        val bitmap: Bitmap = null
+//
+//
+//        if (inputCheck(name, cost, manufacturer, amont)) {
+//            // Create User Object
+//            val good = Goods(
+//                arg.currentUser.id,
+//                name,
+//                cost,
+//                manufacturer,
+//                amont, archive
+//            )
+//            // Update Data to Database
+//            mGoodsViewModel.updateGood(good)
+//            Toast.makeText(requireContext(), "Удачно измененно!", Toast.LENGTH_LONG).show()
+//            // Navigate Back
+//            comeBackToHome()
+//        } else {
+//            Toast.makeText(requireContext(), "Заполните все поля!.", Toast.LENGTH_LONG)
+//                .show()
+//        }
     }
 
     private fun inputCheck(name: String, cost: Int, manufacturer: String, amont: Int): Boolean {

@@ -62,7 +62,6 @@ class LstAdapter : RecyclerView.Adapter<LstAdapter.MyViewHolder>() {
 
                         }
                         R.id.menu_edit -> {
-
                             val action = HomeFragmentDirections.actionHomeFragmentToUpdateFragment(currentItem)
                             holder.itemView.findNavController().navigate(action)
                         }
@@ -78,10 +77,10 @@ class LstAdapter : RecyclerView.Adapter<LstAdapter.MyViewHolder>() {
                     when (item.itemId) {
 
                         R.id.menu_delete -> {
-
+                            onItemClickDelete?.invoke(currentItem)
                         }
                         R.id.menu_recovery -> {
-
+                            onItemClickRecovery?.invoke(currentItem)
                         }
                     }
                     true

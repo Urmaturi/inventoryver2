@@ -10,21 +10,21 @@ class GoodsRepository(private val goodsDao: GoodsDao) {
     val readAllData: LiveData<List<Goods>> = goodsDao.readAllData()
     val readArchiveData: LiveData<List<Goods>> = goodsDao.readArhciveData()
 
-    suspend fun addGoods(goods: Goods ){
+    fun searchData(word: String, isTrueOrFalse: Boolean):LiveData<List<Goods>>  {
+        return goodsDao.searchData(word, isTrueOrFalse)
+    }
+
+    suspend fun addGoods(goods: Goods) {
         goodsDao.addGood(goods)
     }
 
-    suspend fun updateGoods (goods: Goods){
+    suspend fun updateGoods(goods: Goods) {
         goodsDao.updateGood(goods)
     }
 
-    suspend fun deleteGoods(goods: Goods){
+    suspend fun deleteGoods(goods: Goods) {
         goodsDao.deleteGood(goods)
     }
-
-
-
-
 
 
 }

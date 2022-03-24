@@ -1,14 +1,19 @@
 package com.example.inventory2.add
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.launch
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
 import com.example.inventory2.APP
 import com.example.inventory2.GoodsViewModel
 import com.example.inventory2.R
@@ -18,6 +23,29 @@ import com.example.inventory2.databinding.FragmentAddBinding
 class AddFragment : Fragment() {
     lateinit var binding: FragmentAddBinding
     private lateinit var mGoodsViewModel: GoodsViewModel
+    private var bitmap: Bitmap? = null
+
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
+            if (bitmap != null) {
+                binding.imageViewNewImg.loadImage(bitmap)
+                this.bitmap = bitmap
+            }
+        }
+    private val requestSinglePermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                getContent.launch()
+            } else {
+                 Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT)
+            }
+        }
+
+    private fun inputCheck(name: String, cost: Int, manufacturer: String, amont: Int): Boolean {
+        return !(TextUtils.isEmpty(name) && TextUtils.isEmpty(cost.toString()) && TextUtils.isEmpty(
+            manufacturer
+        ) && TextUtils.isEmpty(amont.toString()))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +68,11 @@ class AddFragment : Fragment() {
             comeBackToHome()
         }
 
+        binding.imageViewNewImg.setOnClickListener {
+            requestSinglePermissionLauncher.launch(android.Manifest.permission.CAMERA)
+        }
+
+
         binding.buttonCancel.setOnClickListener {
             Toast.makeText(requireContext(), "Отмена", Toast.LENGTH_LONG)
                 .show()
@@ -55,6 +88,7 @@ class AddFragment : Fragment() {
         val manufacturer = binding.editTextManufacturer.text.toString()
         val amont = binding.editTextNumber.text.toString().toInt()
         val archive = false
+        val image =  bitmap!!
 
 
         if (inputCheck(name, cost, manufacturer, amont)) {
@@ -64,7 +98,8 @@ class AddFragment : Fragment() {
                 name,
                 cost,
                 manufacturer,
-                amont, archive
+                amont, archive,
+                image
             )
 
             // Add Data to Database
@@ -84,11 +119,13 @@ class AddFragment : Fragment() {
         navController.navigate(R.id.action_addFragment_to_homeFragment)
     }
 
-
-    private fun inputCheck(name: String, cost: Int, manufacturer: String, amont: Int): Boolean {
-        return !(TextUtils.isEmpty(name) && TextUtils.isEmpty(cost.toString()) && TextUtils.isEmpty(
-            manufacturer
-        ) && TextUtils.isEmpty(amont.toString()))
+    fun ImageView.loadImage(image: Bitmap){
+        Glide.with(this.context)
+            .load(image)
+            .into(this)
     }
+
+
+
 
 }

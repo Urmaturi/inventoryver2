@@ -1,5 +1,6 @@
 package com.example.inventory2.database
 
+import android.graphics.Bitmap
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -15,7 +16,8 @@ data class Goods(
     var goodCost: Int,
     var goodsManufacturer: String,
     var amountOfGoods: Int,
-    var archiveOfGoods: Boolean
+    var archiveOfGoods: Boolean,
+    val  image: Bitmap,
 ) : Parcelable
 
 
